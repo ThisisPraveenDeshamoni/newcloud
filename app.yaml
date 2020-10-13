@@ -1,20 +1,16 @@
-# Notice: This template has only been tested 
-# under Python27 + GAE standard environment
-#application: DeshamoneCloud
-#version: 1
-#runtime: python38
-runtime: python38
-entrypoint: uwsgi --http-socket :8080 --wsgi-file main.py --callable app --master --processes 1 --threads 2
-# threadsafe is required but can be either true or 
-# false. For some package, it should be true e.g. Flask
-#threadsafe: false
-#api_version: 1
-uwsgi==2.0.19.1
-flask==1.1.2
+runtime: python38 # or python37 for Python 3.7
+
+instance_class: F2
+
+env_variables:
+  BUCKET_NAME: "example-gcs-bucket"
 
 handlers:
-  
-  - url: /.*
-  #secure: always
-  #redirect_http_response_code: 301
-  script: auto
+# Matches requests to /images/... to files in static/images/...
+- url: /images
+  static_dir: static/images
+
+- url: /.*
+  secure: always
+  redirect_http_response_code: 301
+  script: code.py
