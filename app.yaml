@@ -5,9 +5,12 @@
 runtime: python38
 # threadsafe is required but can be either true or 
 # false. For some package, it should be true e.g. Flask
-threadsafe: false
-api_version: 1
+#threadsafe: false
+#api_version: 1
 
 handlers:
-- url: /.*
-  script: code.py
+  
+  - url: /.*
+  secure: always
+  redirect_http_response_code: 301
+  script: auto
